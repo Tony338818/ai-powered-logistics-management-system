@@ -1,0 +1,28 @@
+[
+    {
+        "user_id": "75691429-c98a-4579-9d65-0a4adee63249",
+        "first_name": "Tony",
+        "last_name": "John",
+        "user_name": "Developer",
+        "email": "Chidubemigwe449@gmail.com",
+        "phone": "08028834967",
+        "password": "bdd96f76cdab8b3a3a0eb9b30642238d0bf1fa5c78ff77a344749f3b193bc8c5",
+        "current_data_time": "Sat Dec 28 15:12:34 2024",
+        "isDriver": true,
+        "driver_id": "ce9ddd28-a15e-470f-8576-462e9807681e",
+        "vehicle_id": "123456789",
+        "vehicle_plates": "Akve67",
+        "vehicle_name_model": "Lexus 350rx"
+    },
+    {
+        "user_id": "44ce2e60-ee00-41b4-ac7f-b9766d349518",
+        "first_name": "Tony",
+        "last_name": "John",
+        "user_name": "Chidubem ",
+        "email": "Chidubemigwe449@gmail.com",
+        "phone": "08028834967",
+        "password": "ce8b89cc97bfa2d79c695df1cf78d91ae8d2bee8e58a348ab6dee7c6d667b045",
+        "current_data_time": "Sat Dec 28 15:13:07 2024",
+        "isDriver": false
+    }
+]

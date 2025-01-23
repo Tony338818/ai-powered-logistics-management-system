@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login | Sign Up</title>
+  </head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .login-container {
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 300px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .toggle-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    button {
+      background-color: #3498db;
+      color: white;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      width: 48%;
+    }
+
+    button:hover {
+      background-color: #2980b9;
+    }
+
+    .login-form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    input {
+      margin-bottom: 10px;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    select {
+      margin-bottom: 10px;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    button[type="submit"] {
+      background-color: #2ecc71;
+      color: white;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #27ae60;
+    }
+  </style>
+  <body>
+    <div class="login-container">
+      <h2>Welcome to the App</h2>
+
+      <div class="toggle-buttons">
+        <button id="loginBtn" onclick="toggleForm('login')">Login</button>
+        <button id="signupBtn" onclick="toggleForm('signup')">Sign Up</button>
+      </div>
+
+      <form id="loginForm" class="login-form" action="/login" method="POST">
+        <div class="role-selector">
+          <label for="role">Login As:</label>
+          <select name="role" id="role" onchange="updateForm()">
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
+            <option value="driver">Driver</option>
+          </select>
+        </div>
+
+        <div id="additionalFields">
+          <!-- Dynamic form fields based on role -->
+        </div>
+
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+
+    <script>
+      let isSignup = false;
+
+      function toggleForm(type) {
+        isSignup = type === "signup";
+        document.getElementById("loginForm").reset();
+        updateForm();
+      }
+
+      function updateForm() {
+        const role = document.getElementById("role").value;
+        const additionalFields = document.getElementById("additionalFields");
+        additionalFields.innerHTML = "";
+
+        // Add fields based on role
+        if (isSignup) {
+          additionalFields.innerHTML += `
+                    <input type="text" name="name" placeholder="Full Name" required>
+                    <input type="email" name="email" placeholder="Email" required>
+                    <input type="password" name="password" placeholder="Password" required>
+                    <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+                `;
+        } else {
+          additionalFields.innerHTML += `
+                    <input type="email" name="email" placeholder="Email" required>
+                    <input type="password" name="password" placeholder="Password" required>
+                `;
+        }
+
+        // Add fields specific to the role
+        if (role === "driver") {
+          additionalFields.innerHTML += `<input type="text" name="vehicle" placeholder="Vehicle Type (Optional)">`;
+        }
+      }
+    </script>
+  </body>
+</html>

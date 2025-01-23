@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Cargo - Tracking</title>
+    <style>
+      /* General Reset */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+      }
+
+      /* Navbar */
+      .navbar {
+        background-color: #2c5f2d;
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 20px;
+      }
+
+      .nav-links {
+        list-style: none;
+        display: flex;
+        gap: 15px;
+      }
+
+      .nav-links a {
+        color: white;
+        text-decoration: none;
+      }
+
+      .logo {
+        font-size: 1.5em;
+      }
+
+      /* Hero Section */
+      .hero {
+        text-align: center;
+        padding: 40px 20px;
+        background: url("https://img.freepik.com/free-photo/view-cartoon-animated-3d-penguin-scooter_23-2150881920.jpg?ga=GA1.1.499034816.1735037243&semt=ais_hybrid")
+          no-repeat center center/cover;
+        color: white;
+      }
+
+      .hero h2 {
+        margin-bottom: 10px;
+      }
+
+      .track-options button {
+        background-color: #2c5f2d;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        margin: 5px;
+        cursor: pointer;
+      }
+
+      .tracking-form {
+        margin-top: 20px;
+      }
+
+      .tracking-input {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+      }
+
+      .tracking-input input {
+        padding: 10px;
+        width: 300px;
+      }
+
+      .tracking-input button {
+        background-color: #2c5f2d;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        cursor: pointer;
+      }
+
+      #tracking-details {
+        width: 400px;
+        margin: 20px auto;
+        text-align: center;
+      }
+
+      /* Map Section */
+      .map-section {
+        text-align: center;
+        padding: 20px;
+      }
+
+      .map-section img {
+        width: 90%;
+        margin-bottom: 10px;
+      }
+
+      .view-map-btn {
+        background-color: #2c5f2d;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+      }
+
+      /* Footer */
+      .footer-container {
+        background-color: #2c5f2d;
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        padding: 20px;
+      }
+
+      .footer-left ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      .footer-left ul li {
+        margin-bottom: 5px;
+      }
+
+      .footer-left ul a {
+        color: white;
+        text-decoration: none;
+      }
+
+      .footer-right form {
+        display: flex;
+        gap: 10px;
+      }
+
+      .footer-right input {
+        padding: 10px;
+        width: 250px;
+      }
+
+      .footer-right button {
+        background-color: #fff;
+        color: #2c5f2d;
+        border: none;
+        padding: 10px 15px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="navbar">
+        <h1 class="logo">Smart Cargo</h1>
+        <nav>
+          <ul class="nav-links">
+            <li><a href="{{ url_for('ship') }}">Shipping</a></li>
+            <li><a href="{{ url_for('track') }}">Tracking</a></li>
+            <li><a href="{{ url_for('service') }}">Services</a></li>
+            <li><a href="{{ url_for('faq') }}">FAQ</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <h2>Tracking starts here</h2>
+        <p>
+          Track your SmartCargo® shipments with one of the convenient tools
+          below.
+        </p>
+        <div class="track-options">
+          <button>Track by Number</button>
+          <button>Track by Reference</button>
+          <button>Track by TCN</button>
+          <button>Obtain Proof of Delivery</button>
+        </div>
+        <form class="tracking-form" onsubmit="trackPackage(event)">
+          <label for="tracking-id"
+            >Track your shipment anywhere in the world</label
+          >
+          <div class="tracking-input">
+            <input
+              type="text"
+              id="tracking-id"
+              placeholder="Tracking ID"
+              required
+            />
+            <button type="submit" onclick="track_package()">Track</button>
+          </div>
+        </form>
+      </section>
+
+      <div id="tracking-details"></div>
+
+      <section class="map-section">
+        <img
+          src="https://img.freepik.com/free-photo/3d-smartphone-device-with-map-gps-technology_23-2150458983.jpg?ga=GA1.1.499034816.1735037243&semt=ais_hybrid"
+          alt="Map showing tracking locations"
+        />
+        <button class="view-map-btn">View Full Map</button>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-container">
+        <div class="footer-left">
+          <h3>Smart Cargo</h3>
+          <ul>
+            <li><a href="#">About Smart Cargo</a></li>
+            <li><a href="#">Customer Service</a></li>
+            <li><a href="#">Get a Quote</a></li>
+            <li><a href="#">Developer Portal</a></li>
+          </ul>
+        </div>
+        <div class="footer-right">
+          <h3>Get in touch with us today</h3>
+          <form>
+            <input type="email" placeholder="e.g. smartcargo@gmail.com" />
+            <button type="submit">Submit</button>
+          </form>
+        </div>
+      </div>
+    </footer>
+    <script>
+      async function trackPackage(event) {
+        event.preventDefault();
+        const trackingId = document.getElementById("tracking-id").value;
+
+        try {
+          const response = await fetch("http://localhost:5000/tracking", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ tracking_id: trackingId }),
+          });
+
+          const data = await response.json();
+
+          if (!response.ok) {
+            alert(
+              data.message || "An error occurred while tracking the package."
+            );
+            return;
+          }
+
+          displayTrackingDetails(data);
+        } catch (error) {
+          console.error("Error:", error);
+          alert("An error occurred while tracking the package.");
+        }
+      }
+
+      // Function to display tracking details
+      function displayTrackingDetails(data) {
+        const trackingDetailsDiv = document.getElementById("tracking-details");
+
+        // Clear any existing content
+        trackingDetailsDiv.innerHTML = "";
+
+        // Check if required keys exist
+        if (data.status && data.current_location && data.eta) {
+          const status = document.createElement("p");
+          status.textContent = `Status: ${data.status}`;
+
+          const location = document.createElement("p");
+          location.textContent = `Current Location: ${data.current_location}`;
+
+          const eta = document.createElement("p");
+          eta.textContent = `Estimated Time of Arrival: ${data.eta}`;
+
+          trackingDetailsDiv.appendChild(status);
+          trackingDetailsDiv.appendChild(location);
+          trackingDetailsDiv.appendChild(eta);
+        } else {
+          const error = document.createElement("p");
+          error.textContent = "No tracking details found.";
+          trackingDetailsDiv.appendChild(error);
+        }
+      }
+    </script>
+  </body>
+</html>

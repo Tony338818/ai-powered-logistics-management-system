@@ -1,0 +1,41 @@
+[
+    {
+        "senders_name": "Alice",
+        "receivers_name": "Bob",
+        "shipping_method": "express",
+        "pickup_location": "Lagos",
+        "drop_location": "Abuja",
+        "shipping_id": "e1bdeea6-c4bf-4960-86a0-6eba5a097b5e",
+        "price": 1617.3462519459918,
+        "status": "shipped",
+        "current_data_time": "Fri Dec 27 20:45:17 2024",
+        "estimated_time": "Sun Dec 29 20:45:17 2024",
+        "current_location": "Lagos"
+    },
+    {
+        "senders_name": "Tony",
+        "receivers_name": "Ben",
+        "shipping_method": "express",
+        "pickup_location": "Lagos",
+        "drop_location": "Abuja",
+        "shipping_id": "b6384584-14f3-4923-927a-e3085832f325",
+        "price": 1615.4712519459918,
+        "status": "shipped",
+        "current_data_time": "Fri Dec 27 21:35:19 2024",
+        "estimated_time": "Sun Dec 29 21:35:19 2024",
+        "current_location": "Lagos"
+    },
+    {
+        "senders_name": "Tony",
+        "receivers_name": "Ben",
+        "shipping_method": "standard",
+        "pickup_location": "Igando",
+        "drop_location": "Desa",
+        "shipping_id": "2c63aaf5-792a-4f58-a6b8-195041fe1a94",
+        "price": 9165.257371314075,
+        "status": "shipped",
+        "current_data_time": "Sat Dec 28 14:14:13 2024",
+        "estimated_time": "Mon Dec 30 14:14:13 2024",
+        "current_location": "Igando"
+    }
+]

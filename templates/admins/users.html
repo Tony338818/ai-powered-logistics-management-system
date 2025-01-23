@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Selection Dashboard</title>
+    <style>
+      /* General Styles */
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: #1a1a2e;
+        color: #ffffff;
+        display: flex;
+        height: 100vh;
+      }
+
+      /* Sidebar */
+      .sidebar {
+        width: 80px;
+        background-color: #2e2e48;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 20px;
+      }
+
+      .menu-item {
+        width: 50px;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+        color: #888;
+        cursor: pointer;
+        transition: color 0.3s;
+      }
+
+      .menu-item.active,
+      .menu-item:hover {
+        color: #e94560;
+      }
+
+      /* Main Content */
+      .main-content {
+        flex: 1;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .header h1 {
+        margin: 0;
+      }
+
+      .header-controls {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .search {
+        padding: 8px 12px;
+        border-radius: 5px;
+        border: none;
+        background-color: #2e2e48;
+        color: #fff;
+      }
+
+      .date-picker,
+      .notification {
+        padding: 8px 12px;
+        background-color: #2e2e48;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      /* Table Styles */
+      .user-table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: #2e2e48;
+        border-radius: 10px;
+        overflow: hidden;
+      }
+
+      .user-table th,
+      .user-table td {
+        padding: 12px 20px;
+        text-align: left;
+        color: #fff;
+      }
+
+      .user-table th {
+        background-color: #1a1a2e;
+        font-weight: bold;
+      }
+
+      .user-table tr {
+        border-bottom: 1px solid #444;
+      }
+
+      .user-table tr:hover {
+        background-color: #333;
+      }
+
+      .edit-btn,
+      .delete-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: #fff;
+      }
+
+      .edit-btn:hover {
+        color: #4caf50;
+      }
+
+      .delete-btn:hover {
+        color: #f44336;
+      }
+
+      /* Floating Button */
+      .floating-btn {
+        width: 60px;
+        height: 60px;
+        background-color: #e94560;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        font-size: 18px;
+        font-weight: bold;
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        cursor: pointer;
+      }
+      .dashboard {
+        display: flex;
+        width: 100%;
+        gap: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="dashboard">
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <div class="menu-item active"><i class="fas fa-home"></i></div>
+        <div class="menu-item"><i class="fas fa-user"></i></div>
+        <div class="menu-item"><i class="fas fa-file"></i></div>
+        <div class="menu-item"><i class="fas fa-bell"></i></div>
+        <div class="menu-item"><i class="fas fa-cog"></i></div>
+      </div>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <div class="header">
+          <h1>User Selection</h1>
+          <div class="header-controls">
+            <input type="text" class="search" placeholder="Search" />
+            <div class="date-picker">Dec 07</div>
+            <div class="notification"><i class="fas fa-bell"></i></div>
+          </div>
+        </div>
+
+        <!-- Table -->
+        <table class="user-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Tracking ID</th>
+              <th>Order ID</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><i class="fas fa-user"></i> Tony John</td>
+              <td>TonyJohn1@gmail.com</td>
+              <td>#12345</td>
+              <td>#54321</td>
+              <td>
+                <button class="edit-btn"><i class="fas fa-edit"></i></button>
+                <button class="delete-btn"><i class="fas fa-trash"></i></button>
+              </td>
+            </tr>
+            <tr>
+              <td><i class="fas fa-user"></i> Tony John</td>
+              <td>TonyJohn1@gmail.com</td>
+              <td>#12346</td>
+              <td>#54322</td>
+              <td>
+                <button class="edit-btn"><i class="fas fa-edit"></i></button>
+                <button class="delete-btn"><i class="fas fa-trash"></i></button>
+              </td>
+            </tr>
+            <tr>
+              <td><i class="fas fa-user"></i> Tony John</td>
+              <td>TonyJohn1@gmail.com</td>
+              <td>#12347</td>
+              <td>#54323</td>
+              <td>
+                <button class="edit-btn"><i class="fas fa-edit"></i></button>
+                <button class="delete-btn"><i class="fas fa-trash"></i></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Floating Button -->
+        <div class="floating-btn">
+          <span>CM</span>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Highlight the selected menu item in the sidebar
+      document.querySelectorAll(".menu-item").forEach((item) => {
+        item.addEventListener("click", () => {
+          document
+            .querySelectorAll(".menu-item")
+            .forEach((el) => el.classList.remove("active"));
+          item.classList.add("active");
+        });
+      });
+
+      // Search bar logic (placeholder for real search functionality)
+      document.querySelector(".search").addEventListener("input", (event) => {
+        console.log(`Search query: ${event.target.value}`);
+      });
+
+      // Alert for edit and delete buttons
+      document.querySelectorAll(".edit-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          alert("Edit button clicked!");
+        });
+      });
+
+      document.querySelectorAll(".delete-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          alert("Delete button clicked!");
+        });
+      });
+    </script>
+  </body>
+</html>

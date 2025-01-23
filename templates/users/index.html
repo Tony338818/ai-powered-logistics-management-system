@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Cargo</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+      }
+
+      header {
+        background-color: #2c7c31;
+        color: white;
+        padding: 20px 10%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+      }
+
+      header h1 {
+        font-size: 24px;
+      }
+
+      nav {
+        display: flex;
+        gap: 20px;
+      }
+
+      nav a {
+        color: white;
+        text-decoration: none;
+        font-size: 18px;
+      }
+
+      .menu-icon {
+        display: none;
+        font-size: 24px;
+        cursor: pointer;
+      }
+
+      .mobile-nav {
+        display: none;
+        flex-direction: column;
+        gap: 10px;
+        background-color: #2c7c31;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        padding: 20px;
+      }
+
+      .mobile-nav a {
+        color: white;
+        text-decoration: none;
+        font-size: 18px;
+      }
+
+      @media (max-width: 768px) {
+        nav {
+          display: none;
+        }
+
+        .menu-icon {
+          display: block;
+        }
+
+        .mobile-nav {
+          display: none;
+        }
+
+        .mobile-nav.active {
+          display: flex;
+        }
+
+        .services {
+          flex-direction: column;
+        }
+
+        .services div {
+          flex: 1 1 100%;
+          text-align: center;
+        }
+      }
+
+      .hero {
+        background-image: url("images/homee.jpg");
+        background-size: cover;
+        background-position: center;
+        height: 400px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        text-align: center;
+        padding: 0 20px;
+      }
+
+      .hero input {
+        width: 300px;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        margin-right: 10px;
+      }
+
+      .hero button {
+        padding: 10px 20px;
+        background-color: #2c7c31;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .services {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        padding: 40px 10%;
+      }
+
+      .services div {
+        background-color: #f5f5f5;
+        padding: 20px;
+        text-align: center;
+        border-radius: 5px;
+        flex: 1;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .services img {
+        max-width: 100px;
+        margin-bottom: 20px;
+      }
+
+      .features {
+        background-color: #f5f5f5;
+        padding: 40px 10%;
+      }
+
+      .features h2 {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .features .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+      }
+
+      .features .grid div {
+        background-color: white;
+        padding: 20px;
+        text-align: center;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .features .grid div img {
+        max-width: 200px;
+        margin-bottom: 20px;
+      }
+
+      .footer {
+        background-color: #2c7c31;
+        color: white;
+        padding: 40px 10%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      .footer div {
+        margin: 10px 0;
+      }
+
+      .footer input {
+        width: 300px;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        margin-right: 10px;
+      }
+
+      .footer button {
+        padding: 10px 20px;
+        background-color: white;
+        color: #2c7c31;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      /* Error Message Styling */
+      #error-message {
+        color: red;
+        margin-top: 1rem;
+      }
+
+      /* Tracking Results Styling */
+      #tracking-results {
+        margin-top: 2rem;
+        background-color: #fff;
+        padding: 2rem;
+        border-radius: 5px;
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Smart Cargo</h1>
+      <nav>
+        <a href="{{ url_for('ship') }}">Shipping</a>
+        <a href="{{ url_for('track') }}">Tracking</a>
+        <a href="{{ url_for('service') }}">Services</a>
+        <a href="{{ url_for('faq') }}">FAQ</a>
+      </nav>
+      <div class="menu-icon">☰</div>
+      <div class="mobile-nav">
+        <a href="#">Shipping</a>
+        <a href="#">Tracking</a>
+        <a href="#">Services</a>
+        <a href="#">FAQ</a>
+      </div>
+    </header>
+
+    <section class="hero">
+      <h2>Track your shipment</h2>
+      <p>Enter your tracking ID below</p>
+      <form class="tracking-form" onsubmit="trackPackage(event)">
+        <label for="tracking-id"
+          >Track your shipment anywhere in the world</label
+        >
+        <div class="tracking-input">
+          <input
+            type="text"
+            id="tracking-id"
+            placeholder="Tracking ID"
+            required
+          />
+          <button type="submit" onclick="track_package()">Track</button>
+        </div>
+      </form>
+    </section>
+
+    <div id="tracking-details"></div>
+      <p id="error-message"></p>
+      <div id="tracking-results"></div>
+    </section>
+
+    <section class="services">
+      <div>
+        <img src="images/earth.jpeg" alt="Ship Now" />
+        <h3>Ship Now</h3>
+      </div>
+      <div>
+        <img src="images/track.jpeg" alt="Track Shipment" />
+        <h3>Track Shipment</h3>
+      </div>
+      <div>
+        <img src="images/truck.jpeg" alt="Redirect Package" />
+        <h3>Redirect Package</h3>
+      </div>
+    </section>
+
+    <section class="features">
+      <h2>Why Ship with Us</h2>
+      <div class="grid">
+        <div>
+          <img src="images/section.jpg" alt="Feature Image" />
+          <h3>24hrs Document & Parcel Shipping</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
+        <div>
+          <img src="images/section.jpg" alt="Feature Image" />
+          <h3>Ecommerce & B2B</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
+        <div>
+          <img src="images/section.jpg" alt="Feature Image" />
+          <h3>Cargo Shipping</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
+        <div>
+          <img src="images/section.jpg" alt="Feature Image" />
+          <h3>Fast Delivery</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
+        <div>
+          <img src="images/section.jpg" alt="Feature Image" />
+          <h3>We Ship Everywhere</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
+        <div>
+          <img src="images/section.jpg" alt="Feature Image" />
+          <h3>24hrs Document & Parcel Shipping</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div>
+        <h3>Smart Cargo</h3>
+        <p>About Smart Cargo</p>
+        <p>Customer Service</p>
+        <p>Get a Quote</p>
+        <p>Developer Portal</p>
+      </div>
+      <div>
+        <h3>Get in touch with us today</h3>
+        <input type="email" placeholder="e.g smartcargo@email.com" />
+        <button>Submit</button>
+      </div>
+    </footer>
+
+    <!-- <script>
+      async function trackPackage(event) {
+        event.preventDefault();
+        const trackingId = document.getElementById("tracking-id").value;
+
+        try {
+          const response = await fetch("http://localhost:5000/tracking", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ tracking_id: trackingId }),
+          });
+
+          const data = await response.json();
+
+          if (!response.ok) {
+            alert(
+              data.message || "An error occurred while tracking the package."
+            );
+            return;
+          }
+
+          displayTrackingDetails(data);
+        } catch (error) {
+          console.error("Error:", error);
+          alert("An error occurred while tracking the package.");
+        }
+      }
+
+      // Function to display tracking details
+      function displayTrackingDetails(data) {
+        const trackingDetailsDiv = document.getElementById("tracking-details");
+
+        // Clear any existing content
+        trackingDetailsDiv.innerHTML = "";
+
+        // Check if required keys exist
+        if (data.status && data.current_location && data.eta) {
+          const status = document.createElement("p");
+          status.textContent = `Status: ${data.status}`;
+
+          const location = document.createElement("p");
+          location.textContent = `Current Location: ${data.current_location}`;
+
+          const eta = document.createElement("p");
+          eta.textContent = `Estimated Time of Arrival: ${data.eta}`;
+
+          trackingDetailsDiv.appendChild(status);
+          trackingDetailsDiv.appendChild(location);
+          trackingDetailsDiv.appendChild(eta);
+        } else {
+          const error = document.createElement("p");
+          error.textContent = "No tracking details found.";
+          trackingDetailsDiv.appendChild(error);
+        }
+      }
+    </script> -->
+  </body>
+</html>

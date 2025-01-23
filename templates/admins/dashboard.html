@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Logistics Dashboard</title>
+    <style>
+      /* General Styles */
+      /* * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      } */
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: #1a1a2e;
+        color: #ffffff;
+        display: flex;
+        height: 100vh;
+      }
+      .dashboard {
+        display: flex; /* Make the main container a flex container */
+        width: 100%;
+      }
+
+      .sidebar {
+        width: 80px; /* Set the width of the sidebar */
+        background-color: #0f0f1e;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px 0;
+      }
+
+      .content {
+        flex: 1; /* Allow the content to fill the remaining space */
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      /* Sidebar Styles */
+      .sidebar {
+        width: 80px;
+        background-color: #0f0f1e;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px 0;
+      }
+
+      .sidebar-menu {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .menu-item {
+        width: 50px;
+        height: 50px;
+        background-color: #2e2e48;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+        cursor: pointer;
+      }
+
+      .menu-item.active {
+        background-color: #e94560;
+      }
+
+      .menu-item i {
+        font-size: 16px;
+        color: #ffffff;
+      }
+
+      /* Main Content */
+      .content {
+        flex: 1;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .search-input {
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+        background-color: #2e2e48;
+        color: #fff;
+        margin-right: 10px;
+      }
+
+      .date-picker {
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+        background-color: #2e2e48;
+        color: #fff;
+        margin-right: 10px;
+      }
+
+      .add-drone-btn {
+        padding: 10px 20px;
+        background-color: #e94560;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      /* Stats Section */
+      .stats {
+        display: flex;
+        gap: 20px;
+      }
+
+      .card {
+        flex: 1;
+        padding: 20px;
+        background-color: #2e2e48;
+        border-radius: 10px;
+      }
+
+      .card h4 {
+        margin: 0 0 10px;
+      }
+
+      .card p {
+        margin: 5px 0;
+      }
+
+      /* Performance and Income */
+      .performance-income {
+        margin-top: 20px;
+        display: flex;
+        gap: 20px;
+      }
+
+      .performance-card,
+      .income-card {
+        flex: 1;
+        padding: 20px;
+        background-color: #2e2e48;
+        border-radius: 10px;
+        text-align: center;
+      }
+
+      /* Real-Time Map Section */
+      .real-time-section {
+        display: block;
+        gap: 20px;
+        flex: 2;
+      }
+      .content {
+        display: none !important;
+      }
+      .content.active {
+        display: flex !important;
+      }
+
+      .real-time-map {
+        flex: 2;
+        padding: 20px;
+        background-color: #2e2e48;
+        border-radius: 10px;
+      }
+
+      .real-time-map img {
+        width: 100%;
+        border-radius: 10px;
+      }
+
+      .drone-status {
+        flex: 1;
+        padding: 20px;
+        background-color: #2e2e48;
+        border-radius: 10px;
+      }
+
+      .drone {
+        padding: 10px 0;
+        border-bottom: 1px solid #444;
+      }
+
+      .manage-drones-btn {
+        padding: 10px;
+        background-color: #e94560;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 10px;
+      }
+      .holder {
+        display: flex;
+        gap: 20px;
+      }
+      .first {
+        flex: 3;
+      }
+      p {
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="dashboard">
+      <!-- Sidebar -->
+      <!-- <aside class="sidebar">
+        <div class="sidebar-menu">
+          <a href="dashboard.html" class="menu-item">
+            <i class="icon-home"></i>
+          </a>
+          <a href="users.html" class="menu-item">
+            <i class="icon-user"></i>
+          </a>
+          <a href="reports.html" class="menu-item">
+            <i class="icon-docs"></i>
+          </a>
+          <a href="notifications.html" class="menu-item">
+            <i class="icon-bell"></i>
+          </a>
+          <a href="settings.html" class="menu-item">
+            <i class="icon-settings"></i>
+          </a>
+        </div>
+      </aside> -->
+
+      <!-- Main Content -->
+      <main class="content active">
+        <!-- Header -->
+        <header class="header">
+          <h1>Welcome, Marvin</h1>
+          <div class="header-actions">
+            <input type="text" placeholder="Search" class="search-input" />
+            <input type="date" class="date-picker" />
+            <button class="add-drone-btn">+ Add Drone</button>
+          </div>
+        </header>
+
+        <section class="holder">
+          <section class="first">
+            <!-- Stats Cards -->
+            <section class="stats">
+              <div class="card">
+                <h4>TOTAL DELIVERIES:</h4>
+                <p>Today: <strong>25</strong></p>
+                <p>This Month: <strong>450</strong></p>
+              </div>
+              <div class="card">
+                <h4>DRONES</h4>
+                <p>Active Row: <strong>15</strong></p>
+                <p>Pending Deliveries: <strong>8</strong></p>
+              </div>
+              <div class="card">
+                <h4>DELIVERIES</h4>
+                <p><strong>Electronics</strong></p>
+                <p><strong>Medicine</strong></p>
+              </div>
+            </section>
+
+            <!-- Performance and Income -->
+            <section class="performance-income">
+              <div class="performance-card">
+                <h5>PERFORMANCE</h5>
+              </div>
+              <div class="income-card">
+                <h5>MONTHLY INCOME</h5>
+              </div>
+            </section>
+          </section>
+
+          <!-- Real-Time Map and Drone Status -->
+          <section class="real-time-section">
+            <div class="real-time-map">
+              <h3>Real-Time Map</h3>
+              <div class="map-placeholder">
+                <img
+                  src="https://img.freepik.com/premium-photo/motorcycle-vehicle-scooter-cartoon_53876-541379.jpg?ga=GA1.1.499034816.1735037243&semt=ais_hybrid"
+                  alt="Map Placeholder"
+                />
+              </div>
+            </div>
+            <div class="drone-status">
+              <h5>Drone Status</h5>
+              <div class="drone">
+                <p>ID: DD01</p>
+                <p>Battery: <strong>85%</strong></p>
+                <p>Signal: <strong>Strong</strong></p>
+              </div>
+              <div class="drone">
+                <p>ID: DD01</p>
+                <p>Battery: <strong>85%</strong></p>
+                <p>Signal: <strong>Strong</strong></p>
+              </div>
+              <div class="drone">
+                <p>ID: DD01</p>
+                <p>Battery: <strong>85%</strong></p>
+                <p>Signal: <strong>Strong</strong></p>
+              </div>
+              <button class="manage-drones-btn">Manage Drones</button>
+            </div>
+          </section>
+        </section>
+      </main>
+
+      <!-- user Content -->
+      <!-- <section class="content" id="users">
+        <h2>Users Page</h2>
+        <p>Manage user accounts and profiles.</p>
+      </section> -->
+
+      <!-- reports -->
+      <!-- <section class="content" id="reports">
+        <h2>Reports Page</h2>
+        <p>View and manage reports and analytics.</p>
+      </section> -->
+
+      <!-- noifications -->
+      <!-- <section class="content" id="notifications">
+        <h2>Notifications Page</h2>
+        <p>View recent notifications and alerts.</p>
+      </section> -->
+    </div>
+    <!-- <script>
+      // Handle menu item activation
+      document.querySelectorAll(".menu-item").forEach((menuItem) => {
+        menuItem.addEventListener("click", () => {
+          document.querySelectorAll(".menu-item").forEach((item) => {
+            item.classList.remove("active");
+          });
+          menuItem.classList.add("active");
+        });
+      });
+
+      // Add functionality for the "Add Drone" button
+      document.querySelector(".add-drone-btn").addEventListener("click", () => {
+        alert("Add Drone button clicked! Implement the form or logic here.");
+      });
+
+      // Example logic for managing drones (just a placeholder for real functionality)
+      document
+        .querySelector(".manage-drones-btn")
+        .addEventListener("click", () => {
+          alert("Manage Drones button clicked! Add navigation or logic here.");
+        });
+
+      // Real-time search functionality (placeholder example)
+      document
+        .querySelector(".search-input")
+        .addEventListener("input", (event) => {
+          const searchQuery = event.target.value.toLowerCase();
+          console.log(`Search query: ${searchQuery}`);
+          // Add logic to filter dashboard content
+        });
+
+      // Date picker change event
+      document
+        .querySelector(".date-picker")
+        .addEventListener("change", (event) => {
+          const selectedDate = event.target.value;
+          console.log(`Selected date: ${selectedDate}`);
+          // Add logic to update content based on date
+        });
+    </script>
+    <script>
+      // Handle sidebar navigation
+      document.querySelectorAll(".menu-item").forEach((menuItem, index) => {
+        menuItem.addEventListener("click", () => {
+          document.querySelectorAll(".menu-item").forEach((item) => {
+            item.classList.remove("active");
+          });
+          menuItem.classList.add("active");
+
+          // Show corresponding content section
+          document
+            .querySelectorAll(".content")
+            .forEach((content, contentIndex) => {
+              content.classList.toggle("active", index === contentIndex);
+            });
+        });
+      });
+    </script> -->
+  </body>
+</html>

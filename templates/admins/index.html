@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Logistics Dashboard</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: #1a1a2e;
+        color: #ffffff;
+        display: flex;
+        height: 100vh;
+      }
+      .dashboard {
+        display: flex;
+        width: 100%;
+      }
+      .sidebar {
+        width: 80px;
+        background-color: #0f0f1e;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px 0;
+      }
+      .sidebar-menu {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+      .menu-item {
+        width: 50px;
+        height: 50px;
+        background-color: #2e2e48;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+        cursor: pointer;
+      }
+      .menu-item.active {
+        background-color: #e94560;
+      }
+      .menu-item i {
+        font-size: 16px;
+        color: #ffffff;
+      }
+      .content {
+        flex: 1;
+        padding: 20px;
+        display: none;
+      }
+      .content.active {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .stats,
+      .holder {
+        display: flex;
+        gap: 20px;
+      }
+      .card,
+      .performance-card,
+      .income-card {
+        flex: 1;
+        padding: 20px;
+        background-color: #2e2e48;
+        border-radius: 10px;
+      }
+      .real-time-map img {
+        width: 100%;
+        border-radius: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="dashboard">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="sidebar-menu">
+          <div class="menu-item active" data-target="dashboard">
+            <i class="icon-home">🏠</i>
+          </div>
+          <div class="menu-item" data-target="users">
+            <i class="icon-user">👤</i>
+          </div>
+          <div class="menu-item" data-target="reports">
+            <i class="icon-docs">📄</i>
+          </div>
+          <div class="menu-item" data-target="notifications">
+            <i class="icon-bell">🔔</i>
+          </div>
+          <div class="menu-item" data-target="settings">
+            <i class="icon-settings">⚙️</i>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main>
+        <section id="dashboard" class="content active">
+          <header class="header">
+            <h1>Welcome, Marvin</h1>
+            <div>
+              <input type="text" placeholder="Search" class="search-input" />
+              <input type="date" class="date-picker" />
+              <button class="add-drone-btn">+ Add Drone</button>
+            </div>
+          </header>
+          <section class="holder">
+            <section class="stats">
+              <div class="card">
+                <h4>TOTAL DELIVERIES:</h4>
+                <p>Today: <strong>25</strong></p>
+                <p>This Month: <strong>450</strong></p>
+              </div>
+              <div class="card">
+                <h4>DRONES</h4>
+                <p>Active Now: <strong>15</strong></p>
+                <p>Pending Deliveries: <strong>8</strong></p>
+              </div>
+              <div class="card">
+                <h4>DELIVERIES</h4>
+                <p><strong>Electronics</strong></p>
+                <p><strong>Medicine</strong></p>
+              </div>
+            </section>
+          </section>
+        </section>
+
+        <section id="users" class="content">
+          <h2>Users Page</h2>
+          <p>Manage user accounts and profiles.</p>
+        </section>
+
+        <section id="reports" class="content">
+          <h2>Reports Page</h2>
+          <p>View and manage reports and analytics.</p>
+        </section>
+
+        <section id="notifications" class="content">
+          <h2>Notifications Page</h2>
+          <p>View recent notifications and alerts.</p>
+        </section>
+
+        <section id="settings" class="content">
+          <h2>Settings Page</h2>
+          <p>Configure application settings.</p>
+        </section>
+      </main>
+    </div>
+    <script>
+      // Function to load content dynamically
+      function loadContent(page) {
+        fetch(page)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.text();
+          })
+          .then((data) => {
+            // Replace the current content with the fetched content
+            document.querySelector("main.content").innerHTML = data;
+          })
+          .catch((error) => {
+            console.error("Error loading the page:", error);
+            document.querySelector(
+              "main.content"
+            ).innerHTML = `<p>Error loading page. Please try again.</p>`;
+          });
+      }
+
+      // Add click event listeners to menu items
+      document.querySelectorAll(".menu-item").forEach((menuItem, index) => {
+        const pages = [
+          "dashboard.html",
+          "users.html",
+          "reports.html",
+          "notifications.html",
+          "settings.html",
+        ];
+        menuItem.addEventListener("click", () => {
+          document
+            .querySelectorAll(".menu-item")
+            .forEach((item) => item.classList.remove("active"));
+          menuItem.classList.add("active");
+
+          // Load the corresponding page
+          loadContent(pages[index]);
+        });
+      });
+
+      // Load the default page (dashboard) on page load
+      document.addEventListener("DOMContentLoaded", () => {
+        loadContent("dashboard.html");
+      });
+    </script>
+  </body>
+</html>

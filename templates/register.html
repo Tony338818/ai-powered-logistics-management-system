@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User/Driver Registration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .driver-fields {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Register as User or Driver</h2>
+        <form id="registrationForm">
+            <div class="form-group">
+                <label for="firstName">First Name:</label>
+                <input type="text" id="firstName" name="firstName" required>
+            </div>
+            <div class="form-group">
+                <label for="lastName">Last Name:</label>
+                <input type="text" id="lastName" name="lastName" required>
+            </div>
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number:</label>
+                <input type="text" id="phone" name="phone" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <label for="isDriver">Account Type:</label>
+                <select id="isDriver" name="isDriver">
+                    <option value="user">User</option>
+                    <option value="driver">Driver</option>
+                </select>
+            </div>
+            <div class="driver-fields">
+                <h3>Driver Details</h3>
+                <div class="form-group">
+                    <label for="vehicleId">Vehicle ID:</label>
+                    <input type="text" id="vehicleId" name="vehicleId">
+                </div>
+                <div class="form-group">
+                    <label for="vehiclePlates">Vehicle Plates:</label>
+                    <input type="text" id="vehiclePlates" name="vehiclePlates">
+                </div>
+                <div class="form-group">
+                    <label for="vehicleModel">Vehicle Name & Model:</label>
+                    <input type="text" id="vehicleModel" name="vehicleModel">
+                </div>
+            </div>
+            <button type="submit">Register</button>
+        </form>
+    </div>
+
+    <script>
+        const isDriverSelect = document.getElementById('isDriver');
+        const driverFields = document.querySelector('.driver-fields');
+
+        isDriverSelect.addEventListener('change', () => {
+            if (isDriverSelect.value === 'driver') {
+                driverFields.style.display = 'block';
+            } else {
+                driverFields.style.display = 'none';
+            }
+        });
+
+        document.getElementById('registrationForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+            data.isDriver = data.isDriver === 'driver';
+
+            if (!data.isDriver) {
+                delete data.vehicleId;
+                delete data.vehiclePlates;
+                delete data.vehicleModel;
+            }
+
+            try {
+                const response = await fetch('/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data),
+                });
+                const result = await response.json();
+                alert(result.message);
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Registration failed.');
+            }
+        });
+    </script>
+</body>
+</html>

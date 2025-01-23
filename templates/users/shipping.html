@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Cargo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        .header {
+            background-color: #2c5e1a;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+        .container {
+            padding: 20px;
+        }
+        .section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .section img {
+            max-width: 100%;
+        }
+        .form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .form input, .form select, .form button {
+            margin: 10px 0;
+            padding: 10px;
+            width: 300px;
+        }
+        .footer {
+            background-color: #2c5e1a;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Smart Cargo</h1>
+        <nav>
+            <a href="{{ url_for('ship') }}">Shipping</a>
+            <a href="{{ url_for('track') }}">Tracking</a>
+            <a href="{{ url_for('service') }}">Services</a>
+            <a href="{{ url_for('faq') }}">FAQ</a>
+        </nav>
+    </div>
+    <div class="container">
+        <div class="section">
+            <h2>Ship Now</h2>
+            <p>Packages and pallets, big and small, we offer you instant delivery options for your shipping needs, both domestically and internationally.</p>
+            <button onclick="showShippingForm()">Ship Now</button>
+        </div>
+        <div id="shipping-form" class="form" style="display:none;">
+            <h3>Enter Your Shipping Details</h3>
+            <input type="text" id="sendersName" placeholder="Sender's Name">
+            <input type="text" id="receiversName" placeholder="Receiver's Name">
+            <input type="text" id="pickupLocation" placeholder="Pickup Location">
+            <input type="text" id="dropLocation" placeholder="Drop Location">
+            <textarea id="packageDetails" placeholder="Package Details"></textarea>
+            <select id="deliveryMethod">
+                <option value="standard">Standard</option>
+                <option value="express">Express</option>
+                <option value="same-day">Same-Day</option>
+            </select>
+            <button onclick="submitShipping()">Submit</button>
+        </div>
+    </div>
+    <div class="footer">
+        <p>&copy; 2024 Smart Cargo. All rights reserved.</p>
+    </div>
+    <script>
+        function showShippingForm() {
+            document.getElementById('shipping-form').style.display = 'block';
+        }
+
+        async function submitShipping() {
+            const sendersName = document.getElementById('sendersName').value;
+            const receiversName = document.getElementById('receiversName').value;
+            const pickupLocation = document.getElementById('pickupLocation').value;
+            const dropLocation = document.getElementById('dropLocation').value;
+            const packageDetails = document.getElementById('packageDetails').value;
+            const deliveryMethod = document.getElementById('deliveryMethod').value;
+
+            if (sendersName && receiversName && pickupLocation && dropLocation && packageDetails && deliveryMethod) {
+                const response = await fetch('http://localhost:5000/shipping', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        sendersName,
+                        receiversName,
+                        pickupLocation,
+                        dropLocation,
+                        packageDetails,
+                        deliveryMethod
+                    })
+                });
+
+                const result = await response.json();
+                alert(`Tracking ID: ${result.tracking_id}\n 
+                Price: ${result.price}
+                `);
+            } else {
+                alert('All fields are required!');
+            }
+        }
+    </script>
+</body>
+</html>

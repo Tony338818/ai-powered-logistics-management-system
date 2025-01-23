@@ -1,0 +1,40 @@
+[
+    {
+        "driver_id": "7fa10e5a-c527-11ef-a47a-ccd9ac1c0538",
+        "first_name": "Tony",
+        "last_name": "John",
+        "user_name": "TonyJ",
+        "email": "Tony@gmail.com",
+        "phone": "08028834967",
+        "password": "e7cf3ef4f17c3999a94f2c6f612e8a888e5b1026878e4e19398b23bd38ec221a",
+        "current_data_time": "Sat Dec 28 15:24:50 2024",
+        "vehicle_id": "vehicle_id",
+        "vehicle_plates": "Ak19300",
+        "vehicle_name_model": "Lexus RX350",
+        "stats": {
+            "deliveries_completed": 3,
+            "fastest_delivery_time": 22,
+            "average_delivery_time": "4 hrs",
+            "average_rating": 4.7
+        }
+    },
+    {
+        "driver_id": "7fa10e5a-c527-11ef-a47a-ccd9ac1c0538",
+        "first_name": "Tony",
+        "last_name": "John",
+        "user_name": "TonyJ",
+        "email": "Tony@gmail.com",
+        "phone": "08028834967",
+        "password": "e7cf3ef4f17c3999a94f2c6f612e8a888e5b1026878e4e19398b23bd38ec221a",
+        "current_data_time": "Sat Dec 28 15:24:50 2024",
+        "vehicle_id": "vehicle_id",
+        "vehicle_plates": "Ak19300",
+        "vehicle_name_model": "Lexus RX350",
+        "stats": {
+            "deliveries_completed": 1,
+            "fastest_delivery_time": 30,
+            "average_delivery_time": 30,
+            "average_rating": 4.8
+        }
+    }
+]
